@@ -1,7 +1,8 @@
-
-using KASHOP.BLL.Service;
+using KASHOP.BLL.Service.classes;
+using KASHOP.BLL.Service.interfaces;
 using KASHOP.DAL.Data;
-using KASHOP.DAL.Repositories;
+using KASHOP.DAL.Repositories.classes;
+using KASHOP.DAL.Repositories.@interface;
 using Microsoft.EntityFrameworkCore;
 using Scalar;
 using Scalar.AspNetCore;
@@ -24,6 +25,8 @@ namespace KASHOP.PL
             });
             builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IBrandRepository,BrandRepository>();
+            builder.Services.AddScoped<IBrandService, BrandService>();
 
             var app = builder.Build();
 

@@ -1,4 +1,4 @@
-﻿using KASHOP.BLL.Service;
+﻿using KASHOP.BLL.Service.interfaces;
 using KASHOP.DAL.DTO.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +15,13 @@ namespace KASHOP.PL.Controllers
         [HttpGet("")]
         public IActionResult getAllCategories()
         {
-           return Ok(_service.GetAllCategories());
+           return Ok(_service.GetAll());
         }
 
         [HttpGet("{id}")]
         public IActionResult getCategory([FromRoute]int id)
         {
-            var category = _service.GetCategory(id);
+            var category = _service.GetById(id);
             if (category == null) return NotFound();
             return Ok(category);
         }
@@ -29,14 +29,14 @@ namespace KASHOP.PL.Controllers
         [HttpPost("")]
         public IActionResult createCategory([FromBody] CategoryRequest request)
         {
-            var id = _service.CreateCategory(request);
+            var id = _service.Add(request);
             return CreatedAtAction(nameof(getCategory), new {id},null);
         }
 
         [HttpPatch("{id}")]
         public IActionResult updateCategory([FromRoute] int id, [FromBody] CategoryRequest request)
         {
-            var update = _service.UpdateCategory(id, request);
+            var update = _service.Update(id, request);
             return update > 0 ? Ok() : NotFound();
         }
         [HttpPut("{id}/toggle-status")]
@@ -49,7 +49,7 @@ namespace KASHOP.PL.Controllers
             [HttpDelete("{id}")]
         public IActionResult deleteCategory([FromRoute]int id)
         {
-            return Ok(_service.DeleteCategory(id));
+            return Ok(_service.Delete(id));
         }
     }
 }
